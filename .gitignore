@@ -47,15 +47,8 @@ qtcreator-*
 # Emacs
 .#*
 
+# Claude Code 配置目录
 .claude
-
-<<<<<<< HEAD
-=======
-# ROS1 中间文件
-build/
-devel/
-msc/
 
 # 万创鑫诚源代码
 robot_ws
->>>>>>> 384c182 (chore: 更新忽略规则)
