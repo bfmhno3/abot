@@ -16,8 +16,8 @@ modification, are permitted provided that the following conditions are met:
 THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
 ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
 WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY
-DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
+ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
 (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
 LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
 ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
@@ -26,33 +26,28 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
 #include "AboutDialog.h"
-#include "ui_aboutDialog.h"
 #include <opencv2/core/version.hpp>
 #include "find_object/Version.h"
+#include "ui_aboutDialog.h"
 
 namespace find_object {
 
-AboutDialog::AboutDialog(QWidget * parent) :
-	QDialog(parent)
-{
-	ui_ = new Ui_aboutDialog();
-	ui_->setupUi(this);
-	ui_->label_version->setText(PROJECT_VERSION);
+AboutDialog::AboutDialog(QWidget* parent) : QDialog(parent) {
+  ui_ = new Ui_aboutDialog();
+  ui_->setupUi(this);
+  ui_->label_version->setText(PROJECT_VERSION);
 
-	QString cv_version = CV_VERSION;
-	#if FINDOBJECT_NONFREE == 1
-		cv_version.append(" [With nonfree]");
-	#else
-		cv_version.append(" [Without nonfree]");
-	#endif
+  QString cv_version = CV_VERSION;
+#if FINDOBJECT_NONFREE == 1
+  cv_version.append(" [With nonfree]");
+#else
+  cv_version.append(" [Without nonfree]");
+#endif
 
-	ui_->label_version_opencv->setText(cv_version);
-	ui_->label_version_qt->setText(QT_VERSION_STR);
+  ui_->label_version_opencv->setText(cv_version);
+  ui_->label_version_qt->setText(QT_VERSION_STR);
 }
 
-AboutDialog::~AboutDialog()
-{
-	delete ui_;
-}
+AboutDialog::~AboutDialog() { delete ui_; }
 
-}
+}  // namespace find_object

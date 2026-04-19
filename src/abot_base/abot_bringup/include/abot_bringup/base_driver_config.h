@@ -10,27 +10,27 @@
 #endif
 
 class Robot_parameter;
-class BaseDriverConfig
-{
-public:
-  BaseDriverConfig(ros::NodeHandle &p);
+class BaseDriverConfig {
+ public:
+  BaseDriverConfig(ros::NodeHandle& p);
   ~BaseDriverConfig();
 
   void init(Robot_parameter* r);
   void SetRobotParameters();
 #ifdef USE_DYNAMIC_RECONFIG
 
-  void dynamic_callback(abot_bringup::abot_driverConfig &config, uint32_t level);
+  void dynamic_callback(abot_bringup::abot_driverConfig& config,
+                        uint32_t level);
 
   bool get_param_update_flag();
 
-private:
-  dynamic_reconfigure::Server<abot_bringup::abot_driverConfig > server;
-  dynamic_reconfigure::Server<abot_bringup::abot_driverConfig >::CallbackType f;
+ private:
+  dynamic_reconfigure::Server<abot_bringup::abot_driverConfig> server;
+  dynamic_reconfigure::Server<abot_bringup::abot_driverConfig>::CallbackType f;
 #endif
-public:
+ public:
   Robot_parameter* rp;
-  
+
   std::string port;
   int32_t buadrate;
 
@@ -39,19 +39,20 @@ public:
 
   bool publish_tf;
 
-  //double ticks_per_meter;
+  // double ticks_per_meter;
 
   std::string cmd_vel_topic;
   std::string odom_topic;
   bool out_pid_debug_enable;
-private:
+
+ private:
 #ifdef USE_DYNAMIC_RECONFIG
   bool param_update_flag;
 #endif
   ros::NodeHandle& pn;
   ros::ServiceClient client;
 
-   bool set_flag;
+  bool set_flag;
 };
 
 #endif

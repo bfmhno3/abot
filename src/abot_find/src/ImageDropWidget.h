@@ -13,22 +13,20 @@
 namespace find_object {
 
 class ImageDropWidget : public QWidget {
+  Q_OBJECT;
 
-	Q_OBJECT;
+ public:
+  ImageDropWidget(QWidget *parent = 0, Qt::WindowFlags flags = 0);
+  virtual ~ImageDropWidget();
 
-public:
-	ImageDropWidget(QWidget *parent = 0, Qt::WindowFlags flags = 0);
-	virtual ~ImageDropWidget();
+ Q_SIGNALS:
+  void imagesReceived(const QStringList &);
 
-Q_SIGNALS:
-	void imagesReceived(const QStringList &);
-
-
-protected:
-	virtual void dragEnterEvent(QDragEnterEvent *event);
-	virtual void dropEvent(QDropEvent *event);
+ protected:
+  virtual void dragEnterEvent(QDragEnterEvent *event);
+  virtual void dropEvent(QDropEvent *event);
 };
 
-}
+}  // namespace find_object
 
 #endif /* IMAGEDROPWIDGET_H_ */

@@ -16,8 +16,8 @@ modification, are permitted provided that the following conditions are met:
 THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
 ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
 WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY
-DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
+ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
 (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
 LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
 ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
@@ -34,35 +34,35 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 namespace find_object {
 
-class CameraTcpServer : public QTcpServer
-{
-	Q_OBJECT;
-public:
-	CameraTcpServer(quint16 port = 0, QObject * parent = 0);
-	cv::Mat getImage();
-	int imagesBuffered() const {return images_.size();}
-	bool isConnected() const;
+class CameraTcpServer : public QTcpServer {
+  Q_OBJECT;
 
-	QHostAddress getHostAddress() const;
-	quint16 getPort() const;
+ public:
+  CameraTcpServer(quint16 port = 0, QObject* parent = 0);
+  cv::Mat getImage();
+  int imagesBuffered() const { return images_.size(); }
+  bool isConnected() const;
 
-protected:
+  QHostAddress getHostAddress() const;
+  quint16 getPort() const;
+
+ protected:
 #if QT_VERSION >= 0x050000
-	virtual void incomingConnection ( qintptr socketDescriptor );
+  virtual void incomingConnection(qintptr socketDescriptor);
 #else
-	virtual void incomingConnection ( int socketDescriptor );
+  virtual void incomingConnection(int socketDescriptor);
 #endif
 
-private Q_SLOTS:
-	void readReceivedData();
-	void displayError(QAbstractSocket::SocketError socketError);
-	void connectionLost();
+ private Q_SLOTS:
+  void readReceivedData();
+  void displayError(QAbstractSocket::SocketError socketError);
+  void connectionLost();
 
-private:
-	quint64 blockSize_;
-	QVector<cv::Mat> images_;
+ private:
+  quint64 blockSize_;
+  QVector<cv::Mat> images_;
 };
 
-} // namespace find_object
+}  // namespace find_object
 
 #endif /* CAMERATCPCLIENT_H_ */

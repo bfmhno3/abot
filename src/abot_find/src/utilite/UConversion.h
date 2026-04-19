@@ -1,30 +1,30 @@
 /*
-*  utilite is a cross-platform library with
-*  useful utilities for fast and small developing.
-*  Copyright (C) 2010  Mathieu Labbe
-*
-*  utilite is free library: you can redistribute it and/or modify
-*  it under the terms of the GNU Lesser General Public License as published by
-*  the Free Software Foundation, either version 3 of the License, or
-*  (at your option) any later version.
-*
-*  utilite is distributed in the hope that it will be useful,
-*  but WITHOUT ANY WARRANTY; without even the implied warranty of
-*  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-*  GNU Lesser General Public License for more details.
-*
-*  You should have received a copy of the GNU Lesser General Public License
-*  along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
+ *  utilite is a cross-platform library with
+ *  useful utilities for fast and small developing.
+ *  Copyright (C) 2010  Mathieu Labbe
+ *
+ *  utilite is free library: you can redistribute it and/or modify
+ *  it under the terms of the GNU Lesser General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  utilite is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU Lesser General Public License for more details.
+ *
+ *  You should have received a copy of the GNU Lesser General Public License
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 
 #ifndef UCONVERSION_H
 #define UCONVERSION_H
 
-//#include "utilite/UtiLiteExp.h" // DLL export/import defines
+// #include "utilite/UtiLiteExp.h" // DLL export/import defines
 
+#include <stdarg.h>
 #include <string>
 #include <vector>
-#include <stdarg.h>
 
 /**
  * \file UConversion.h
@@ -32,7 +32,7 @@
  *
  * This contains functions to do some convenient conversion like
  * uNumber2str(), uBytes2Hex() or uHex2Bytes().
-*/
+ */
 
 /**
  * Replace old characters in a string to new ones.
@@ -48,7 +48,7 @@
  * @param after the new character replacing the old one
  * @return the modified string
  */
-std::string uReplaceChar(const std::string & str, char before, char after);
+std::string uReplaceChar(const std::string &str, char before, char after);
 
 /**
  * Replace old characters in a string with the specified string.
@@ -64,7 +64,8 @@ std::string uReplaceChar(const std::string & str, char before, char after);
  * @param after the new string replacing the old character
  * @return the modified string
  */
-std::string uReplaceChar(const std::string & str, char before, const std::string & after);
+std::string uReplaceChar(const std::string &str, char before,
+                         const std::string &after);
 
 /**
  * Transform characters from a string to upper case.
@@ -77,7 +78,7 @@ std::string uReplaceChar(const std::string & str, char before, const std::string
  * @param str the string
  * @return the modified string
  */
-std::string uToUpperCase(const std::string & str);
+std::string uToUpperCase(const std::string &str);
 
 /**
  * Transform characters from a string to lower case.
@@ -90,7 +91,7 @@ std::string uToUpperCase(const std::string & str);
  * @param str the string
  * @return the modified string
  */
-std::string uToLowerCase(const std::string & str);
+std::string uToLowerCase(const std::string &str);
 
 /**
  * Convert a number (unsigned int) to a string.
@@ -131,7 +132,7 @@ std::string uBool2Str(bool boolean);
  * @param str the string to convert in a boolean
  * @return the boolean
  */
-bool uStr2Bool(const char * str);
+bool uStr2Bool(const char *str);
 
 /**
  * Convert a bytes array to an hexadecimal string.
@@ -148,7 +149,7 @@ bool uStr2Bool(const char * str);
  * @param bytesLen the length of the bytes array
  * @return the hexadecimal string
  */
-std::string uBytes2Hex(const char * bytes, unsigned int bytesLen);
+std::string uBytes2Hex(const char *bytes, unsigned int bytesLen);
 /**
  * Convert an hexadecimal string to a bytes array.
  * The string must be pair length. The hexadecimal
@@ -163,7 +164,7 @@ std::string uBytes2Hex(const char * bytes, unsigned int bytesLen);
  * @param hex the hexadecimal string
  * @return the bytes array
  */
-std::vector<char> uHex2Bytes(const std::string & hex);
+std::vector<char> uHex2Bytes(const std::string &hex);
 /**
  * Convert an hexadecimal string to a bytes array.
  * The string must be pair length. The hexadecimal
@@ -178,7 +179,7 @@ std::vector<char> uHex2Bytes(const std::string & hex);
  * @param bytesLen the hexadecimal string length
  * @return the bytes array
  */
-std::vector<char> uHex2Bytes(const char * hex, int hexLen);
+std::vector<char> uHex2Bytes(const char *hex, int hexLen);
 
 /**
  * Convert an hexadecimal string to an ascii string. A convenient way
@@ -196,7 +197,7 @@ std::vector<char> uHex2Bytes(const char * hex, int hexLen);
  * @param hex the hexadecimal string
  * @return the ascii string
  */
-std::string uHex2Str(const std::string & hex);
+std::string uHex2Str(const std::string &hex);
 
 /**
  * Convert hexadecimal (left or right part) value to an ascii character.
@@ -207,10 +208,11 @@ std::string uHex2Str(const std::string & hex);
  * @endcode
  * @see ascii2hex
  * @param c the hexadecimal value
- * @param rightPart If we want the character corresponding to the right of left part (4 bits) of the byte value.
+ * @param rightPart If we want the character corresponding to the right of left
+ * part (4 bits) of the byte value.
  * @return the ascii character (in upper case)
  */
-unsigned char uHex2Ascii(const unsigned char & c, bool rightPart);
+unsigned char uHex2Ascii(const unsigned char &c, bool rightPart);
 
 /**
  * Convert an ascii character to an hexadecimal value (right 4 bits).
@@ -224,30 +226,30 @@ unsigned char uHex2Ascii(const unsigned char & c, bool rightPart);
  * @param c the ascii character
  * @return the hexadecimal value
  */
-unsigned char uAscii2Hex(const unsigned char & c);
+unsigned char uAscii2Hex(const unsigned char &c);
 
 /**
  * Format a string like printf, and return it as a std::string
  */
-std::string uFormatv (const char *fmt, va_list ap);
+std::string uFormatv(const char *fmt, va_list ap);
 
 /**
  * Format a string like printf, and return it as a std::string
  */
-std::string uFormat (const char *fmt, ...);
+std::string uFormat(const char *fmt, ...);
 
 #ifdef WIN32
 /**
  * Convert multi-byte string to unicode (wide-char) string.
  * Note that returned whar_t * must be deleted : delete [] wText;
  */
-wchar_t * createWCharFromChar(const char * text);
+wchar_t *createWCharFromChar(const char *text);
 
 /**
  * Convert unicode (wide-char) string to multi-byte string.
  * Note that returned char * must be deleted : delete [] text;
  */
-char * createCharFromWChar(const wchar_t * wText);
+char *createCharFromWChar(const wchar_t *wText);
 #endif
 
 #endif /* UCONVERSION_H */

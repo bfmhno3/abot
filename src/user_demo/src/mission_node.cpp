@@ -3,11 +3,10 @@
 
 using namespace mission;
 
-int main(int argc, char** argv)
-{
-    ros::init(argc, argv, "mission_node");
-    MissionNode mission_node;
-    mission_node.initMissionNode();
-    ros::spin();
-    return 0; 
+int main(int argc, char** argv) {
+  ros::init(argc, argv, "mission_node");
+  MissionNode mission_node;
+  mission_node.initMissionNode();
+  ros::spin();
+  return 0;
 }

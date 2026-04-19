@@ -16,8 +16,8 @@ modification, are permitted provided that the following conditions are met:
 THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
 ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
 WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY
-DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
+ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
 (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
 LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
 ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
@@ -25,59 +25,50 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#include <QtNetwork/QNetworkInterface>
 #include <QtCore/QCoreApplication>
+#include <QtNetwork/QNetworkInterface>
 #include "TcpClient.h"
 
-void showUsage()
-{
-	printf("\ntcpObjectsClient [hostname] port\n");
-	exit(-1);
+void showUsage() {
+  printf("\ntcpObjectsClient [hostname] port\n");
+  exit(-1);
 }
 
-int main(int argc, char * argv[])
-{
-	if(argc < 2 || argc > 3)
-	{
-		showUsage();
-	}
+int main(int argc, char* argv[]) {
+  if (argc < 2 || argc > 3) {
+    showUsage();
+  }
 
-	QString ipAddress;
-	quint16 port = 0;
+  QString ipAddress;
+  quint16 port = 0;
 
-	if(argc == 2)
-	{
-		port = atoi(argv[1]);
-	}
-	else if(argc == 3)
-	{
-		ipAddress = argv[1];
-		port = atoi(argv[2]);
-	}
+  if (argc == 2) {
+    port = atoi(argv[1]);
+  } else if (argc == 3) {
+    ipAddress = argv[1];
+    port = atoi(argv[2]);
+  }
 
-	if(ipAddress.isEmpty())
-	{
-		 ipAddress = QHostAddress(QHostAddress::LocalHost).toString();
-	}
+  if (ipAddress.isEmpty()) {
+    ipAddress = QHostAddress(QHostAddress::LocalHost).toString();
+  }
 
-	QCoreApplication app(argc, argv);
+  QCoreApplication app(argc, argv);
 
-	printf("Connecting to \"%s:%d\"...\n", ipAddress.toStdString().c_str(), port);
+  printf("Connecting to \"%s:%d\"...\n", ipAddress.toStdString().c_str(), port);
 
-	TcpClient client;
+  TcpClient client;
 
-	client.connectToHost(ipAddress, port);
+  client.connectToHost(ipAddress, port);
 
-	if(client.waitForConnected())
-	{
-		printf("Connecting to \"%s:%d\"... connected!\n", ipAddress.toStdString().c_str(), port);
-		app.exec();
-	}
-	else
-	{
-		printf("Connecting to \"%s:%d\"... connection failed!\n", ipAddress.toStdString().c_str(), port);
-	}
+  if (client.waitForConnected()) {
+    printf("Connecting to \"%s:%d\"... connected!\n",
+           ipAddress.toStdString().c_str(), port);
+    app.exec();
+  } else {
+    printf("Connecting to \"%s:%d\"... connection failed!\n",
+           ipAddress.toStdString().c_str(), port);
+  }
 
-	return 0;
+  return 0;
 }
-

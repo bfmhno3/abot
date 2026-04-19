@@ -1,4 +1,3 @@
-
 branches:
   only:
     - master
@@ -33,19 +32,19 @@ install:
   - ECHO "Installed zlib:"
   - ps: "ls \"C:/Program Files/zlib\""
   - set PATH=%PATH%;C:\Program Files\zlib\bin
-  
+
 before_build:
   - cd c:\projects\find-object\build
   - ECHO %PROGRAMFILES%
   - ECHO %PATH%
   - cmake -G "Visual Studio 14 2015 Win64" -DOpenCV_DIR="C:\Program Files\opencv\build" ..
-  
-after_build :
+
+after_build:
   - cmake --build . --config Release --target package
 
 artifacts:
   - path: build\Find-Object-*
-  
+
 notifications:
   - provider: Email
     to:

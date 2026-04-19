@@ -8,15 +8,15 @@ project(user_demo)
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED COMPONENTS
-  roscpp
-  rospy
-  actionlib_msgs
-  geometry_msgs
-  std_msgs
-  tf
-  tf2_ros
-  tf_conversions
-  nav_msgs
+    roscpp
+    rospy
+    actionlib_msgs
+    geometry_msgs
+    std_msgs
+    tf
+    tf2_ros
+    tf_conversions
+    nav_msgs
 )
 
 ## System dependencies are found with CMake's conventions
@@ -109,10 +109,10 @@ find_package(Eigen3 REQUIRED)
 ## CATKIN_DEPENDS: catkin_packages dependent projects also need
 ## DEPENDS: system dependencies of this project that dependent projects also need
 catkin_package(
-  INCLUDE_DIRS include
-  LIBRARIES cam_track
-  CATKIN_DEPENDS actionlib_msgs geometry_msgs std_msgs tf tf2_ros
-#  DEPENDS system_lib
+    INCLUDE_DIRS include
+    LIBRARIES cam_track
+    CATKIN_DEPENDS actionlib_msgs geometry_msgs std_msgs tf tf2_ros
+    #  DEPENDS system_lib
 )
 
 ###########
@@ -122,8 +122,8 @@ catkin_package(
 ## Specify additional locations of header files
 ## Your package locations should be listed before other locations
 include_directories(
-  include
-  ${catkin_INCLUDE_DIRS}
+    include
+    ${catkin_INCLUDE_DIRS}
 )
 
 ## Declare a C++ library
@@ -142,7 +142,7 @@ include_directories(
 # add_executable(${PROJECT_NAME}_node src/user_demo_node.cpp)
 add_executable(mission_node src/mission_node.cpp)
 target_link_libraries(mission_node
-   ${catkin_LIBRARIES}
+    ${catkin_LIBRARIES}
 )
 
 ## Rename C++ executable without prefix

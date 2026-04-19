@@ -16,8 +16,8 @@ modification, are permitted provided that the following conditions are met:
 THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
 ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
 WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY
-DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
+ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
 (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
 LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
 ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
@@ -28,28 +28,28 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #ifndef IMAGESTCPSERVER_H_
 #define IMAGESTCPSERVER_H_
 
-#include "find_object/Camera.h"
 #include <QtNetwork/QTcpSocket>
+#include "find_object/Camera.h"
 
-class ImagesTcpServer : public QTcpSocket
-{
-	Q_OBJECT
+class ImagesTcpServer : public QTcpSocket {
+  Q_OBJECT
 
-public:
-	static QHostAddress getHostAddress();
+ public:
+  static QHostAddress getHostAddress();
 
-public:
-	ImagesTcpServer(float hz = 10.0f, const QString & path = "", QObject * parent = 0);
+ public:
+  ImagesTcpServer(float hz = 10.0f, const QString& path = "",
+                  QObject* parent = 0);
 
-private Q_SLOTS:
-	void startCamera();
-	void publishImage(const cv::Mat & image);
+ private Q_SLOTS:
+  void startCamera();
+  void publishImage(const cv::Mat& image);
 
-Q_SIGNALS:
-	void connectionLost();
+ Q_SIGNALS:
+  void connectionLost();
 
-private:
-	find_object::Camera camera_;
+ private:
+  find_object::Camera camera_;
 };
 
 #endif /* TCPCLIENT_H_ */

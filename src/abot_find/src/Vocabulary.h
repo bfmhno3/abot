@@ -16,8 +16,8 @@ modification, are permitted provided that the following conditions are met:
 THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
 ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
 WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY
-DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
+ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
 (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
 LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
 ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
@@ -35,33 +35,43 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 namespace find_object {
 
 class Vocabulary {
-public:
-	Vocabulary();
-	virtual ~Vocabulary();
+ public:
+  Vocabulary();
+  virtual ~Vocabulary();
 
-	void clear();
-	QMultiMap<int, int> addWords(const cv::Mat & descriptors, int objectId);
-	void update();
-	void search(const cv::Mat & descriptors, cv::Mat & results, cv::Mat & dists, int k);
-	int size() const {return indexedDescriptors_.rows + notIndexedDescriptors_.rows;}
-	int dim() const {return !indexedDescriptors_.empty()?indexedDescriptors_.cols:notIndexedDescriptors_.cols;}
-	int type() const {return !indexedDescriptors_.empty()?indexedDescriptors_.type():notIndexedDescriptors_.type();}
-	const QMultiMap<int, int> & wordToObjects() const {return wordToObjects_;}
-	const cv::Mat & indexedDescriptors() const {return indexedDescriptors_;}
+  void clear();
+  QMultiMap<int, int> addWords(const cv::Mat& descriptors, int objectId);
+  void update();
+  void search(const cv::Mat& descriptors, cv::Mat& results, cv::Mat& dists,
+              int k);
+  int size() const {
+    return indexedDescriptors_.rows + notIndexedDescriptors_.rows;
+  }
+  int dim() const {
+    return !indexedDescriptors_.empty() ? indexedDescriptors_.cols
+                                        : notIndexedDescriptors_.cols;
+  }
+  int type() const {
+    return !indexedDescriptors_.empty() ? indexedDescriptors_.type()
+                                        : notIndexedDescriptors_.type();
+  }
+  const QMultiMap<int, int>& wordToObjects() const { return wordToObjects_; }
+  const cv::Mat& indexedDescriptors() const { return indexedDescriptors_; }
 
-	void save(QDataStream & streamSessionPtr, bool saveVocabularyOnly = false) const;
-	void load(QDataStream & streamSessionPtr, bool loadVocabularyOnly = false);
-	bool save(const QString & filename) const;
-	bool load(const QString & filename);
+  void save(QDataStream& streamSessionPtr,
+            bool saveVocabularyOnly = false) const;
+  void load(QDataStream& streamSessionPtr, bool loadVocabularyOnly = false);
+  bool save(const QString& filename) const;
+  bool load(const QString& filename);
 
-private:
-	cv::flann::Index flannIndex_;
-	cv::Mat indexedDescriptors_;
-	cv::Mat notIndexedDescriptors_;
-	QMultiMap<int, int> wordToObjects_; // <wordId, ObjectId>
-	QVector<int> notIndexedWordIds_;
+ private:
+  cv::flann::Index flannIndex_;
+  cv::Mat indexedDescriptors_;
+  cv::Mat notIndexedDescriptors_;
+  QMultiMap<int, int> wordToObjects_;  // <wordId, ObjectId>
+  QVector<int> notIndexedWordIds_;
 };
 
-} // namespace find_object
+}  // namespace find_object
 
 #endif /* VOCABULARY_H_ */

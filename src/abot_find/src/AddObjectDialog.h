@@ -16,8 +16,8 @@ modification, are permitted provided that the following conditions are met:
 THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
 ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
 WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY
-DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
+ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
 (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
 LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
 ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
@@ -30,8 +30,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include <QDialog>
 #include <QtCore/QTimer>
-#include <opencv2/features2d/features2d.hpp>
 #include <opencv2/core/core.hpp>
+#include <opencv2/features2d/features2d.hpp>
 #include "find_object/Header.h"
 
 class Ui_addObjectDialog;
@@ -45,47 +45,49 @@ class Feature2D;
 class ObjSignature;
 
 class AddObjectDialog : public QDialog {
+  Q_OBJECT
 
-	Q_OBJECT
+ public:
+  AddObjectDialog(Camera *camera, const cv::Mat &image, bool mirrorView,
+                  QWidget *parent = 0, Qt::WindowFlags f = 0);
+  virtual ~AddObjectDialog();
 
-public:
-	AddObjectDialog(Camera * camera, const cv::Mat & image, bool mirrorView, QWidget * parent = 0, Qt::WindowFlags f = 0);
-	virtual ~AddObjectDialog();
+  // ownership transferred to caller
+  void retrieveObject(ObjWidget **widget, ObjSignature **signature);
 
-	// ownership transferred to caller
-	void retrieveObject(ObjWidget ** widget, ObjSignature ** signature);
+ private Q_SLOTS:
+  void update(const cv::Mat &);
+  void update(const cv::Mat &, const find_object::Header &, const cv::Mat &,
+              float);
+  void next();
+  void back();
+  void cancel();
+  void takePicture();
+  void updateNextButton();
+  void updateNextButton(const cv::Rect &);
+  void changeSelectionMode();
 
-private Q_SLOTS:
-	void update(const cv::Mat &);
-	void update(const cv::Mat &, const find_object::Header &, const cv::Mat &, float);
-	void next();
-	void back();
-	void cancel();
-	void takePicture();
-	void updateNextButton();
-	void updateNextButton(const cv::Rect &);
-	void changeSelectionMode();
+ protected:
+  virtual void closeEvent(QCloseEvent *event);
 
-protected:
-	virtual void closeEvent(QCloseEvent* event);
+ private:
+  void setState(int state);
+  cv::Rect computeROI(const std::vector<cv::KeyPoint> &kpts);
 
-private:
-	void setState(int state);
-	cv::Rect computeROI(const std::vector<cv::KeyPoint> & kpts);
-private:
-	Ui_addObjectDialog * ui_;
-	Camera * camera_;
-	ObjWidget * objWidget_;
-	ObjSignature * objSignature_;
-	cv::Mat cameraImage_;
-	cv::Rect roi_;
-	Feature2D * detector_;
-	Feature2D * extractor_;
+ private:
+  Ui_addObjectDialog *ui_;
+  Camera *camera_;
+  ObjWidget *objWidget_;
+  ObjSignature *objSignature_;
+  cv::Mat cameraImage_;
+  cv::Rect roi_;
+  Feature2D *detector_;
+  Feature2D *extractor_;
 
-	enum State{kTakePicture, kSelectFeatures, kVerifySelection, kClosing};
-	int state_;
+  enum State { kTakePicture, kSelectFeatures, kVerifySelection, kClosing };
+  int state_;
 };
 
-} // namespace find_object
+}  // namespace find_object
 
 #endif /* ADDOBJECTDIALOG_H_ */

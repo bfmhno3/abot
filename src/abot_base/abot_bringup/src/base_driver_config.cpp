@@ -3,29 +3,22 @@
 #include "data_holder.h"
 #define PI 3.1415926f
 
-
-BaseDriverConfig::BaseDriverConfig(ros::NodeHandle &p) : pn(p)
-{
+BaseDriverConfig::BaseDriverConfig(ros::NodeHandle &p) : pn(p) {
 #ifdef USE_DYNAMIC_RECONFIG
   param_update_flag = true;
 #endif
   set_flag = true;
 }
 
+BaseDriverConfig::~BaseDriverConfig() {}
 
-BaseDriverConfig::~BaseDriverConfig()
-{
-    
-}
-
-void BaseDriverConfig::init(Robot_parameter* r) 
-{
+void BaseDriverConfig::init(Robot_parameter *r) {
   rp = r;
 
-  //comm param
+  // comm param
   pn.param<std::string>("port", port, "/dev/ttyACM0");
   pn.param<int32_t>("buadrate", buadrate, 115200);
-  
+
   ROS_INFO("port:%s buadrate:%d", port.c_str(), buadrate);
 
   pn.param<std::string>("base_frame", base_frame, "base_link");
@@ -35,17 +28,15 @@ void BaseDriverConfig::init(Robot_parameter* r)
   pn.param<bool>("out_pid_debug_enable", out_pid_debug_enable, false);
   ROS_INFO("out_pid_debug_enable:%d", out_pid_debug_enable);
 
-  //topic name param
+  // topic name param
   pn.param<std::string>("cmd_vel_topic", cmd_vel_topic, "cmd_vel");
   pn.param<std::string>("odom_topic", odom_topic, "odom");
 }
 
-void BaseDriverConfig::SetRobotParameters() 
-{
+void BaseDriverConfig::SetRobotParameters() {
 #ifdef USE_DYNAMIC_RECONFIG
-  static bool flag=true;
-  if (flag)
-  {
+  static bool flag = true;
+  if (flag) {
     flag = false;
     f = boost::bind(&BaseDriverConfig::dynamic_callback, this, _1, _2);
     server.setCallback(f);
@@ -54,9 +45,9 @@ void BaseDriverConfig::SetRobotParameters()
 }
 
 #ifdef USE_DYNAMIC_RECONFIG
-void BaseDriverConfig::dynamic_callback(abot_bringup::abot_driverConfig &config, uint32_t level) {
-  if (set_flag)
-  {
+void BaseDriverConfig::dynamic_callback(abot_bringup::abot_driverConfig &config,
+                                        uint32_t level) {
+  if (set_flag) {
     set_flag = false;
     config.wheel_diameter = rp->wheel_diameter;
     config.wheel_track = rp->wheel_track;
@@ -71,15 +62,14 @@ void BaseDriverConfig::dynamic_callback(abot_bringup::abot_driverConfig &config,
     config.max_v_liner_y = rp->max_v_liner_y;
     config.max_v_angular_z = rp->max_v_angular_z;
     config.imu_type = rp->imu_type;
-    
+
     return;
   }
-  ROS_INFO("Reconfigure Request: %d %d %d %d %d %d %d %d %d %d %d %d %d", 
-          config.wheel_diameter, config.wheel_track,  config.encoder_resolution,
-          config.do_pid_interval, config.kp, config.ki, config.kd, config.ko, 
-          config.cmd_last_time, 
-          config.max_v_liner_x, config.max_v_liner_y, config.max_v_angular_z, 
-          config.imu_type);
+  ROS_INFO("Reconfigure Request: %d %d %d %d %d %d %d %d %d %d %d %d %d",
+           config.wheel_diameter, config.wheel_track, config.encoder_resolution,
+           config.do_pid_interval, config.kp, config.ki, config.kd, config.ko,
+           config.cmd_last_time, config.max_v_liner_x, config.max_v_liner_y,
+           config.max_v_angular_z, config.imu_type);
 
   rp->wheel_diameter = config.wheel_diameter;
   rp->wheel_track = config.wheel_track;
@@ -98,11 +88,10 @@ void BaseDriverConfig::dynamic_callback(abot_bringup::abot_driverConfig &config,
   param_update_flag = true;
 }
 
-bool BaseDriverConfig::get_param_update_flag()
-{
-  bool tmp=param_update_flag;
+bool BaseDriverConfig::get_param_update_flag() {
+  bool tmp = param_update_flag;
   param_update_flag = false;
-  
+
   return tmp;
 }
 #endif

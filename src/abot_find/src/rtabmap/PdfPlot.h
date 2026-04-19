@@ -1,7 +1,8 @@
 // Taken from RTAB-Map library r606 [www.rtabmap.googlecode.com]
 
 /*
- * Copyright (C) 2010-2011, Mathieu Labbe and IntRoLab - Universite de Sherbrooke
+ * Copyright (C) 2010-2011, Mathieu Labbe and IntRoLab - Universite de
+ * Sherbrooke
  *
  * This file is part of RTAB-Map.
  *
@@ -26,44 +27,44 @@
 
 namespace rtabmap {
 
-class PdfPlotItem : public UPlotItem
-{
-public:
-	PdfPlotItem(float dataX, float dataY, float width, int childCount = -1);
-	virtual ~PdfPlotItem();
+class PdfPlotItem : public UPlotItem {
+ public:
+  PdfPlotItem(float dataX, float dataY, float width, int childCount = -1);
+  virtual ~PdfPlotItem();
 
-	void setLikelihood(int id, float value, int childCount);
-	void setImagesRef(const QMap<int, QByteArray> * imagesRef) {_imagesRef = imagesRef;}
+  void setLikelihood(int id, float value, int childCount);
+  void setImagesRef(const QMap<int, QByteArray>* imagesRef) {
+    _imagesRef = imagesRef;
+  }
 
-	float value() const {return this->data().y();}
-	int id() const {return this->data().x();}
+  float value() const { return this->data().y(); }
+  int id() const { return this->data().x(); }
 
-protected:
-	virtual void showDescription(bool shown);
+ protected:
+  virtual void showDescription(bool shown);
 
-private:
-	QGraphicsTextItem * _text;
-	QGraphicsPixmapItem * _img;
-	int _childCount;
-	const QMap<int, QByteArray> * _imagesRef;
-
+ private:
+  QGraphicsTextItem* _text;
+  QGraphicsPixmapItem* _img;
+  int _childCount;
+  const QMap<int, QByteArray>* _imagesRef;
 };
 
-class PdfPlotCurve : public UPlotCurve
-{
-	Q_OBJECT
+class PdfPlotCurve : public UPlotCurve {
+  Q_OBJECT
 
-public:
-	PdfPlotCurve(const QString & name, const QMap<int, QByteArray> * imagesMapRef, QObject * parent = 0);
-	virtual ~PdfPlotCurve();
+ public:
+  PdfPlotCurve(const QString& name, const QMap<int, QByteArray>* imagesMapRef,
+               QObject* parent = 0);
+  virtual ~PdfPlotCurve();
 
-	virtual void clear();
-	void setData(const QMap<int, int> & dataMap, const QMap<int, int> & weightsMap);
+  virtual void clear();
+  void setData(const QMap<int, int>& dataMap, const QMap<int, int>& weightsMap);
 
-private:
-	const QMap<int, QByteArray> * _imagesMapRef;
+ private:
+  const QMap<int, QByteArray>* _imagesMapRef;
 };
 
-}
+}  // namespace rtabmap
 
 #endif /* PDFPLOT_H_ */

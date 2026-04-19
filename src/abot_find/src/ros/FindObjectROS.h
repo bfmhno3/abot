@@ -16,8 +16,8 @@ modification, are permitted provided that the following conditions are met:
 THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
 ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
 WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY
-DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
+ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
 (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
 LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
 ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
@@ -28,44 +28,41 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #ifndef FINDOBJECTROS_H_
 #define FINDOBJECTROS_H_
 
-#include <ros/ros.h>
 #include <cv_bridge/cv_bridge.h>
+#include <ros/ros.h>
 #include <tf/transform_broadcaster.h>
 #include "find_object/FindObject.h"
 
-#include <QtCore/QObject>
 #include <QtCore/QMultiMap>
+#include <QtCore/QObject>
 #include <QtCore/QPair>
 #include <QtCore/QRect>
 #include <QtGui/QTransform>
 
-class FindObjectROS : public find_object::FindObject
-{
-	Q_OBJECT;
+class FindObjectROS : public find_object::FindObject {
+  Q_OBJECT;
 
-public:
-	FindObjectROS(QObject * parent = 0);
-	virtual ~FindObjectROS() {}
+ public:
+  FindObjectROS(QObject* parent = 0);
+  virtual ~FindObjectROS() {}
 
-public Q_SLOTS:
-	void publish(const find_object::DetectionInfo & info, const find_object::Header & header, const cv::Mat & depth, float depthConstant);
+ public Q_SLOTS:
+  void publish(const find_object::DetectionInfo& info,
+               const find_object::Header& header, const cv::Mat& depth,
+               float depthConstant);
 
-private:
-	cv::Vec3f getDepth(const cv::Mat & depthImage,
-					   int x, int y,
-					   float cx, float cy,
-					   float fx, float fy);
+ private:
+  cv::Vec3f getDepth(const cv::Mat& depthImage, int x, int y, float cx,
+                     float cy, float fx, float fy);
 
+ private:
+  ros::Publisher pub_;
+  ros::Publisher pubStamped_;
+  ros::Publisher pubInfo_;
 
-private:
-	ros::Publisher pub_;
-	ros::Publisher pubStamped_;
-	ros::Publisher pubInfo_;
-
-	std::string objFramePrefix_;
-	bool usePnP_;
-	tf::TransformBroadcaster tfBroadcaster_;
-
+  std::string objFramePrefix_;
+  bool usePnP_;
+  tf::TransformBroadcaster tfBroadcaster_;
 };
 
 #endif /* FINDOBJECTROS_H_ */

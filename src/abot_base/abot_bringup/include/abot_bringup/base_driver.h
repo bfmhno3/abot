@@ -3,63 +3,54 @@
 #include <boost/shared_ptr.hpp>
 #include "base_driver_config.h"
 
-
+#include <abot_imu/RawImu.h>
 #include <geometry_msgs/Twist.h>
-#include <tf/transform_broadcaster.h>
 #include <nav_msgs/Odometry.h>
 #include <std_msgs/Int16.h>
 #include <std_msgs/Int32.h>
-#include "abot_bringup/transport.h"
+#include <tf/transform_broadcaster.h>
 #include "abot_bringup/dataframe.h"
-#include <abot_imu/RawImu.h>
+#include "abot_bringup/transport.h"
 
-class BaseDriver
-{
-private:
+class BaseDriver {
+ private:
   BaseDriver();
 
-public:
-  static BaseDriver* Instance()
-  {
-    if (instance == NULL)
-      instance = new BaseDriver();
+ public:
+  static BaseDriver* Instance() {
+    if (instance == NULL) instance = new BaseDriver();
 
     return instance;
   }
   ~BaseDriver();
   void work_loop();
-private:
+
+ private:
   void cmd_vel_callback(const geometry_msgs::Twist& vel_cmd);
-  //void correct_pos_callback(const std_msgs::Float32MultiArray& pos);
+  // void correct_pos_callback(const std_msgs::Float32MultiArray& pos);
   void init_cmd_odom();
   void init_pid_debug();
   void init_imu();
   void read_param();
 
   void update_param();
-  //void update_encoder();
+  // void update_encoder();
   void update_odom();
   void update_speed();
   void update_pid_debug();
   void update_imu();
 
-public:
+ public:
+  BaseDriverConfig& getBaseDriverConfig() { return bdg; }
 
-  BaseDriverConfig& getBaseDriverConfig(){
-    return bdg;
-  }
+  ros::NodeHandle* getNodeHandle() { return &nh; }
 
-  ros::NodeHandle* getNodeHandle(){
-    return &nh;
-  }
+  ros::NodeHandle* getPrivateNodeHandle() { return &pn; }
 
-  ros::NodeHandle* getPrivateNodeHandle(){
-    return &pn;
-  }
-private:
+ private:
   static BaseDriver* instance;
 
-  //ros::NodeHandle n;
+  // ros::NodeHandle n;
   BaseDriverConfig bdg;
   boost::shared_ptr<Transport> trans;
   boost::shared_ptr<Dataframe> frame;
@@ -67,16 +58,16 @@ private:
   ros::Subscriber cmd_vel_sub;
 
   ros::Publisher odom_pub;
-  //ros::Publisher left_encoder_pub;
-  //ros::Publisher right_encoder_pub;
-  
+  // ros::Publisher left_encoder_pub;
+  // ros::Publisher right_encoder_pub;
+
   nav_msgs::Odometry odom;
   geometry_msgs::TransformStamped odom_trans;
   tf::TransformBroadcaster odom_broadcaster;
-  
+
   ros::NodeHandle nh;
   ros::NodeHandle pn;
-  
+
 #define MAX_MOTOR_COUNT 4
   ros::Publisher pid_debug_pub_input[MAX_MOTOR_COUNT];
   ros::Publisher pid_debug_pub_output[MAX_MOTOR_COUNT];
@@ -85,7 +76,7 @@ private:
   std_msgs::Int32 pid_debug_msg_output[MAX_MOTOR_COUNT];
 
   bool need_update_speed;
-  //ros::Time last_update_odom_time; 
+  // ros::Time last_update_odom_time;
 
   abot_imu::RawImu raw_imu_msgs;
 

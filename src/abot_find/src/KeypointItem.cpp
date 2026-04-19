@@ -16,8 +16,8 @@ modification, are permitted provided that the following conditions are met:
 THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
 ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
 WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY
-DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
+ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
 (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
 LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
 ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
@@ -27,111 +27,106 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "KeypointItem.h"
 
-#include <QtGui/QPen>
-#include <QtGui/QBrush>
 #include <QGraphicsScene>
+#include <QtGui/QBrush>
+#include <QtGui/QPen>
 
 namespace find_object {
 
-KeypointItem::KeypointItem(int id, qreal x, qreal y, int r, const cv::KeyPoint & kpt, int wordID, const QColor & color, QGraphicsItem * parent) :
-	QGraphicsEllipseItem(x, y, r, r, parent),
-	placeHolder_(0),
-	id_(id),
-	kpt_(kpt),
-	wordID_(wordID)
-{
-	this->setPen(QPen(color));
-	this->setBrush(QBrush(color));
-	this->setAcceptHoverEvents(true);
-	this->setFlag(QGraphicsItem::ItemIsFocusable, true);
-	this->setFlag(QGraphicsItem::ItemIsSelectable, true);
+KeypointItem::KeypointItem(int id, qreal x, qreal y, int r,
+                           const cv::KeyPoint &kpt, int wordID,
+                           const QColor &color, QGraphicsItem *parent)
+    : QGraphicsEllipseItem(x, y, r, r, parent),
+      placeHolder_(0),
+      id_(id),
+      kpt_(kpt),
+      wordID_(wordID) {
+  this->setPen(QPen(color));
+  this->setBrush(QBrush(color));
+  this->setAcceptHoverEvents(true);
+  this->setFlag(QGraphicsItem::ItemIsFocusable, true);
+  this->setFlag(QGraphicsItem::ItemIsSelectable, true);
 }
 
-KeypointItem::~KeypointItem()
-{
+KeypointItem::~KeypointItem() {}
+
+void KeypointItem::setColor(const QColor &color) {
+  this->setPen(QPen(color));
+  this->setBrush(QBrush(color));
+  if (placeHolder_) {
+    QList<QGraphicsItem *> items = placeHolder_->childItems();
+    if (items.size()) {
+      ((QGraphicsTextItem *)items.front())
+          ->setDefaultTextColor(this->pen().color().rgb());
+    }
+  }
 }
 
-void KeypointItem::setColor(const QColor & color)
-{
-	this->setPen(QPen(color));
-	this->setBrush(QBrush(color));
-	if(placeHolder_)
-	{
-		QList<QGraphicsItem *> items = placeHolder_->childItems();
-		if(items.size())
-		{
-			((QGraphicsTextItem *)items.front())->setDefaultTextColor(this->pen().color().rgb());
-		}
-	}
+void KeypointItem::showDescription() {
+  if (!placeHolder_ || !placeHolder_->isVisible()) {
+    if (!placeHolder_) {
+      QString info = QString(
+                         "Keypoint = %1\n"
+                         "Word = %2\n"
+                         "Response = %3\n"
+                         "Angle = %4\n"
+                         "X = %5\n"
+                         "Y = %6\n"
+                         "Size = %7")
+                         .arg(id_)
+                         .arg(wordID_)
+                         .arg(kpt_.response)
+                         .arg(kpt_.angle)
+                         .arg(kpt_.pt.x)
+                         .arg(kpt_.pt.y)
+                         .arg(kpt_.size);
+
+      placeHolder_ = new QGraphicsRectItem();
+      placeHolder_->setVisible(false);
+      this->scene()->addItem(placeHolder_);
+      placeHolder_->setBrush(
+          QBrush(QColor(0, 0, 0, 170)));  // Black transparent background
+      QGraphicsTextItem *text = new QGraphicsTextItem(placeHolder_);
+      text->setDefaultTextColor(this->pen().color().rgb());
+      text->setPlainText(info);
+      placeHolder_->setRect(text->boundingRect());
+    }
+
+    QPen pen = this->pen();
+    this->setPen(QPen(pen.color(), pen.width() + 2));
+    placeHolder_->setZValue(this->zValue() + 1);
+    placeHolder_->setPos(this->mapToScene(0, 0));
+    placeHolder_->setVisible(true);
+  }
 }
 
-void KeypointItem::showDescription()
-{
-	if(!placeHolder_ || !placeHolder_->isVisible())
-	{
-		if(!placeHolder_)
-		{
-			QString info = QString( "Keypoint = %1\n"
-									"Word = %2\n"
-									"Response = %3\n"
-									"Angle = %4\n"
-									"X = %5\n"
-									"Y = %6\n"
-									"Size = %7").arg(id_).arg(wordID_).arg(kpt_.response).arg(kpt_.angle).arg(kpt_.pt.x).arg(kpt_.pt.y).arg(kpt_.size);
-
-			placeHolder_ = new QGraphicsRectItem();
-			placeHolder_->setVisible(false);
-			this->scene()->addItem(placeHolder_);
-			placeHolder_->setBrush(QBrush(QColor ( 0, 0, 0, 170 ))); // Black transparent background
-			QGraphicsTextItem * text = new QGraphicsTextItem(placeHolder_);
-			text->setDefaultTextColor(this->pen().color().rgb());
-			text->setPlainText(info);
-			placeHolder_->setRect(text->boundingRect());
-		}
-
-
-		QPen pen = this->pen();
-		this->setPen(QPen(pen.color(), pen.width()+2));
-		placeHolder_->setZValue(this->zValue()+1);
-		placeHolder_->setPos(this->mapToScene(0,0));
-		placeHolder_->setVisible(true);
-	}
+void KeypointItem::hideDescription() {
+  if (placeHolder_ && placeHolder_->isVisible()) {
+    placeHolder_->setVisible(false);
+    this->setPen(QPen(pen().color(), pen().width() - 2));
+  }
 }
 
-void KeypointItem::hideDescription()
-{
-	if(placeHolder_ && placeHolder_->isVisible())
-	{
-		placeHolder_->setVisible(false);
-		this->setPen(QPen(pen().color(), pen().width()-2));
-	}
+void KeypointItem::hoverEnterEvent(QGraphicsSceneHoverEvent *event) {
+  this->showDescription();
+  QGraphicsEllipseItem::hoverEnterEvent(event);
 }
 
-void KeypointItem::hoverEnterEvent ( QGraphicsSceneHoverEvent * event )
-{
-	this->showDescription();
-	QGraphicsEllipseItem::hoverEnterEvent(event);
+void KeypointItem::hoverLeaveEvent(QGraphicsSceneHoverEvent *event) {
+  if (!this->hasFocus()) {
+    this->hideDescription();
+  }
+  QGraphicsEllipseItem::hoverEnterEvent(event);
 }
 
-void KeypointItem::hoverLeaveEvent ( QGraphicsSceneHoverEvent * event )
-{
-	if(!this->hasFocus())
-	{
-		this->hideDescription();
-	}
-	QGraphicsEllipseItem::hoverEnterEvent(event);
+void KeypointItem::focusInEvent(QFocusEvent *event) {
+  this->showDescription();
+  QGraphicsEllipseItem::focusInEvent(event);
 }
 
-void KeypointItem::focusInEvent ( QFocusEvent * event )
-{
-	this->showDescription();
-	QGraphicsEllipseItem::focusInEvent(event);
+void KeypointItem::focusOutEvent(QFocusEvent *event) {
+  this->hideDescription();
+  QGraphicsEllipseItem::focusOutEvent(event);
 }
 
-void KeypointItem::focusOutEvent ( QFocusEvent * event )
-{
-	this->hideDescription();
-	QGraphicsEllipseItem::focusOutEvent(event);
-}
-
-} // namespace find_object
+}  // namespace find_object

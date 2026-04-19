@@ -12,9 +12,9 @@
 
 namespace find_object {
 
-std::vector<unsigned char> compressData(const cv::Mat & data);
-cv::Mat uncompressData(const unsigned char * bytes, unsigned long size);
+std::vector<unsigned char> compressData(const cv::Mat& data);
+cv::Mat uncompressData(const unsigned char* bytes, unsigned long size);
 
-}
+}  // namespace find_object
 
 #endif /* SRC_COMPRESSION_H_ */

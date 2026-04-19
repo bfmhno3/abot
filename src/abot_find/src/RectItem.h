@@ -16,8 +16,8 @@ modification, are permitted provided that the following conditions are met:
 THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
 ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
 WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY
-DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
+ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
 (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
 LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
 ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
@@ -30,40 +30,39 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include <QGraphicsRectItem>
 #include <QGraphicsTextItem>
-#include <QtGui/QPen>
 #include <QtGui/QBrush>
+#include <QtGui/QPen>
 
 namespace find_object {
 
-class RectItem : public QObject, public QGraphicsRectItem
-{
-	Q_OBJECT;
+class RectItem : public QObject, public QGraphicsRectItem {
+  Q_OBJECT;
 
-public:
-	RectItem(int id, const QRectF &rect, QGraphicsItem * parent = 0);
-	virtual ~RectItem();
+ public:
+  RectItem(int id, const QRectF &rect, QGraphicsItem *parent = 0);
+  virtual ~RectItem();
 
-	void setColor(const QColor & color);
-	int id() const {return id_;}
+  void setColor(const QColor &color);
+  int id() const { return id_; }
 
-Q_SIGNALS:
-	void hovered(int);
+ Q_SIGNALS:
+  void hovered(int);
 
-protected:
-	virtual void hoverEnterEvent ( QGraphicsSceneHoverEvent * event );
-	virtual void hoverLeaveEvent ( QGraphicsSceneHoverEvent * event );
-	virtual void focusInEvent ( QFocusEvent * event );
-	virtual void focusOutEvent ( QFocusEvent * event );
+ protected:
+  virtual void hoverEnterEvent(QGraphicsSceneHoverEvent *event);
+  virtual void hoverLeaveEvent(QGraphicsSceneHoverEvent *event);
+  virtual void focusInEvent(QFocusEvent *event);
+  virtual void focusOutEvent(QFocusEvent *event);
 
-private:
-	void showDescription();
-	void hideDescription();
+ private:
+  void showDescription();
+  void hideDescription();
 
-private:
-	QGraphicsRectItem * placeHolder_;
-	int id_;
+ private:
+  QGraphicsRectItem *placeHolder_;
+  int id_;
 };
 
-} // namespace find_object
+}  // namespace find_object
 
 #endif /* RECTITEM_H_ */

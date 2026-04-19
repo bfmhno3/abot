@@ -16,8 +16,8 @@ modification, are permitted provided that the following conditions are met:
 THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
 ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
 WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY
-DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
+ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
 (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
 LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
 ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
@@ -35,44 +35,46 @@ class QAbstractButton;
 
 namespace find_object {
 
-class ParametersToolBox: public QToolBox
-{
-	Q_OBJECT
+class ParametersToolBox : public QToolBox {
+  Q_OBJECT
 
-public:
-	ParametersToolBox(QWidget *parent = 0);
-	virtual ~ParametersToolBox();
+ public:
+  ParametersToolBox(QWidget *parent = 0);
+  virtual ~ParametersToolBox();
 
-	void setupUi();
-	QWidget * getParameterWidget(const QString & key);
-	void updateParameter(const QString & key);
+  void setupUi();
+  QWidget *getParameterWidget(const QString &key);
+  void updateParameter(const QString &key);
 
-private:
-	void addParameter(QVBoxLayout * layout, const QString & key, const QVariant & value);
-	void addParameter(QVBoxLayout * layout, const QString & key, const QString & value);
-	void addParameter(QVBoxLayout * layout, const QString & key, const int & value);
-	void addParameter(QVBoxLayout * layout, const QString & key, const double & value);
-	void addParameter(QVBoxLayout * layout, const QString & key, const bool & value);
-	void addParameter(QVBoxLayout * layout, const QString & name, QWidget * widget);
+ private:
+  void addParameter(QVBoxLayout *layout, const QString &key,
+                    const QVariant &value);
+  void addParameter(QVBoxLayout *layout, const QString &key,
+                    const QString &value);
+  void addParameter(QVBoxLayout *layout, const QString &key, const int &value);
+  void addParameter(QVBoxLayout *layout, const QString &key,
+                    const double &value);
+  void addParameter(QVBoxLayout *layout, const QString &key, const bool &value);
+  void addParameter(QVBoxLayout *layout, const QString &name, QWidget *widget);
 
-	void changeParameter(QObject * sender, int value);
+  void changeParameter(QObject *sender, int value);
 
-Q_SIGNALS:
-	void parametersChanged(const QStringList & name);
+ Q_SIGNALS:
+  void parametersChanged(const QStringList &name);
 
-private Q_SLOTS:
-	void changeParameter();
-	void changeParameter(const QString & value);
-	void changeParameter(bool value);
-	void changeParameter(int value);
-	void resetCurrentPage();
-	void resetAllPages();
+ private Q_SLOTS:
+  void changeParameter();
+  void changeParameter(const QString &value);
+  void changeParameter(bool value);
+  void changeParameter(int value);
+  void resetCurrentPage();
+  void resetAllPages();
 
-private:
-	QStringList resetPage(int index);
-	void updateParametersVisibility();
+ private:
+  QStringList resetPage(int index);
+  void updateParametersVisibility();
 };
 
-} // namespace find_object
+}  // namespace find_object
 
 #endif /* PARAMETERSTOOLBOX_H_ */

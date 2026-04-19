@@ -8,9 +8,9 @@ add_definitions(-std=c++11)
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED COMPONENTS
-  roscpp
-  rospy
-  std_msgs
+    roscpp
+    rospy
+    std_msgs
 )
 
 ## System dependencies are found with CMake's conventions
@@ -103,10 +103,10 @@ find_package(catkin REQUIRED COMPONENTS
 ## CATKIN_DEPENDS: catkin_packages dependent projects also need
 ## DEPENDS: system dependencies of this project that dependent projects also need
 catkin_package(
-#  INCLUDE_DIRS include
-#  LIBRARIES robot_voice
-#  CATKIN_DEPENDS roscpp rospy std_msgs
-#  DEPENDS system_lib
+    #  INCLUDE_DIRS include
+    #  LIBRARIES robot_voice
+    #  CATKIN_DEPENDS roscpp rospy std_msgs
+    #  DEPENDS system_lib
 )
 
 ###########
@@ -117,8 +117,8 @@ catkin_package(
 ## Your package locations should be listed before other locations
 # include_directories(include)
 include_directories(
-  ${catkin_INCLUDE_DIRS}
-  include
+    ${catkin_INCLUDE_DIRS}
+    include
 )
 
 ## Declare a C++ library
@@ -153,27 +153,27 @@ include_directories(
 
 add_executable(tts_subscribe src/tts_subscribe.cpp)
 target_link_libraries(
-   tts_subscribe
-   ${catkin_LIBRARIES} 
-   libmsc.so -ldl -pthread
- )
+    tts_subscribe
+    ${catkin_LIBRARIES}
+    libmsc.so -ldl -pthread
+)
 
-add_executable(iat_publish 
-  src/iat_publish.cpp 
-  src/speech_recognizer.c 
-  src/linuxrec.c)
+add_executable(iat_publish
+    src/iat_publish.cpp
+    src/speech_recognizer.c
+    src/linuxrec.c)
 target_link_libraries(
-   iat_publish
-   ${catkin_LIBRARIES} 
-   libmsc.so -ldl -lpthread -lm -lrt -lasound
- )
+    iat_publish
+    ${catkin_LIBRARIES}
+    libmsc.so -ldl -lpthread -lm -lrt -lasound
+)
 
 add_executable(voice_assistant src/voice_assistant.cpp)
 target_link_libraries(
-   voice_assistant
-   ${catkin_LIBRARIES} 
-   libmsc.so -ldl -pthread
- )
+    voice_assistant
+    ${catkin_LIBRARIES}
+    libmsc.so -ldl -pthread
+)
 
 #############
 ## Install ##
