@@ -1,18 +1,18 @@
 
-SET(headers_ui 
-	TcpResponse.h
+SET(headers_ui
+    TcpResponse.h
 )
 
-IF(QT4_FOUND)
+IF (QT4_FOUND)
     QT4_WRAP_CPP(moc_srcs ${headers_ui})
-ELSE()
+ELSE ()
     QT5_WRAP_CPP(moc_srcs ${headers_ui})
-ENDIF()
+ENDIF ()
 
 SET(SRC_FILES
     TcpResponse.cpp
     main.cpp
-    ${moc_srcs} 
+    ${moc_srcs}
 )
 
 SET(INCLUDE_DIRS
@@ -21,14 +21,14 @@ SET(INCLUDE_DIRS
     ${OpenCV_INCLUDE_DIRS}
 )
 
-IF(QT4_FOUND)
+IF (QT4_FOUND)
     INCLUDE(${QT_USE_FILE})
-ENDIF(QT4_FOUND)
+ENDIF (QT4_FOUND)
 
 
 SET(LIBRARIES
-	${OpenCV_LIBS} 
-	${QT_LIBRARIES} 
+    ${OpenCV_LIBS}
+    ${QT_LIBRARIES}
 )
 
 # Make sure the compiler can find include files from our library.
@@ -38,14 +38,14 @@ INCLUDE_DIRECTORIES(${INCLUDE_DIRS})
 # The extension is automatically found.
 ADD_EXECUTABLE(tcpRequest ${SRC_FILES})
 TARGET_LINK_LIBRARIES(tcpRequest find_object ${LIBRARIES})
-IF(Qt5_FOUND)
+IF (Qt5_FOUND)
     QT5_USE_MODULES(tcpRequest Widgets Core Gui Network PrintSupport)
-ENDIF(Qt5_FOUND)
+ENDIF (Qt5_FOUND)
 
-SET_TARGET_PROPERTIES( tcpRequest 
-  PROPERTIES OUTPUT_NAME ${PROJECT_PREFIX}-tcpRequest)
-  
+SET_TARGET_PROPERTIES(tcpRequest
+    PROPERTIES OUTPUT_NAME ${PROJECT_PREFIX}-tcpRequest)
+
 INSTALL(TARGETS tcpRequest
-        RUNTIME DESTINATION "${CMAKE_INSTALL_BINDIR}" COMPONENT runtime
-        BUNDLE DESTINATION "${CMAKE_BUNDLE_LOCATION}" COMPONENT runtime)
+    RUNTIME DESTINATION "${CMAKE_INSTALL_BINDIR}" COMPONENT runtime
+    BUNDLE DESTINATION "${CMAKE_BUNDLE_LOCATION}" COMPONENT runtime)
 

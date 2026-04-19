@@ -13,10 +13,10 @@ addons:
       - libopencv-dev
       - libqt4-dev
 
-script: 
-    - mkdir -p build && cd build
-    - cmake .. 
-    - make
+script:
+  - mkdir -p build && cd build
+  - cmake ..
+  - make
 
 notifications:
   email: false

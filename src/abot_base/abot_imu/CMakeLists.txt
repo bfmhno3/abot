@@ -2,35 +2,35 @@ cmake_minimum_required(VERSION 2.8.3)
 project(abot_imu)
 
 find_package(catkin REQUIRED COMPONENTS
-  roscpp
-  rospy
-  std_msgs
-  geometry_msgs
-  message_generation
-  tf
+    roscpp
+    rospy
+    std_msgs
+    geometry_msgs
+    message_generation
+    tf
 )
 
 add_message_files(FILES
-                  RawImu.msg
-                 )
+    RawImu.msg
+)
 
 generate_messages(DEPENDENCIES std_msgs geometry_msgs)
 
 catkin_package(CATKIN_DEPENDS message_runtime std_msgs geometry_msgs)
 
 include_directories(
-  include ${catkin_INCLUDE_DIRS}
-  include ${catkin_INCLUDE_DIRS}
-  include include/abot_imu/
+    include ${catkin_INCLUDE_DIRS}
+    include ${catkin_INCLUDE_DIRS}
+    include include/abot_imu/
 )
 
 add_executable(abot_imu
-  src/abot_imu.cpp
-  src/abot_imu_node.cpp
+    src/abot_imu.cpp
+    src/abot_imu_node.cpp
 )
 add_dependencies(abot_imu ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 target_link_libraries(abot_imu
-  ${catkin_LIBRARIES}
+    ${catkin_LIBRARIES}
 )
 
 
@@ -124,10 +124,10 @@ target_link_libraries(abot_imu
 ## CATKIN_DEPENDS: catkin_packages dependent projects also need
 ## DEPENDS: system dependencies of this project that dependent projects also need
 catkin_package(
-#  INCLUDE_DIRS include
-#  LIBRARIES abot_imu
-#  CATKIN_DEPENDS roscpp rospy std_msgs
-#  DEPENDS system_lib
+    #  INCLUDE_DIRS include
+    #  LIBRARIES abot_imu
+    #  CATKIN_DEPENDS roscpp rospy std_msgs
+    #  DEPENDS system_lib
 )
 
 ###########
@@ -137,8 +137,8 @@ catkin_package(
 ## Specify additional locations of header files
 ## Your package locations should be listed before other locations
 include_directories(
-# include
-  ${catkin_INCLUDE_DIRS}
+    # include
+    ${catkin_INCLUDE_DIRS}
 )
 
 ## Declare a C++ library

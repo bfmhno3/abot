@@ -8,22 +8,22 @@ project(abot_bringup)
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED COMPONENTS
-  roscpp
-  rospy
-  std_msgs
-  tf
-  dynamic_reconfigure
-  abot_imu
+    roscpp
+    rospy
+    std_msgs
+    tf
+    dynamic_reconfigure
+    abot_imu
 )
 
 generate_dynamic_reconfigure_options(
-   cfg/abot_parameter.cfg
+    cfg/abot_parameter.cfg
 )
 
 include_directories(
-  include ${catkin_INCLUDE_DIRS}
-  include ${catkin_INCLUDE_DIRS}
-  include include/abot_bringup/
+    include ${catkin_INCLUDE_DIRS}
+    include ${catkin_INCLUDE_DIRS}
+    include include/abot_bringup/
 )
 
 
@@ -117,10 +117,10 @@ include_directories(
 ## CATKIN_DEPENDS: catkin_packages dependent projects also need
 ## DEPENDS: system dependencies of this project that dependent projects also need
 catkin_package(
-#  INCLUDE_DIRS include
-#  LIBRARIES abot_bringup
-#  CATKIN_DEPENDS roscpp rospy std_msgs
-#  DEPENDS system_lib
+    #  INCLUDE_DIRS include
+    #  LIBRARIES abot_bringup
+    #  CATKIN_DEPENDS roscpp rospy std_msgs
+    #  DEPENDS system_lib
 )
 
 ###########
@@ -130,8 +130,8 @@ catkin_package(
 ## Specify additional locations of header files
 ## Your package locations should be listed before other locations
 include_directories(
-# include
-  ${catkin_INCLUDE_DIRS}
+    # include
+    ${catkin_INCLUDE_DIRS}
 )
 
 ## Declare a C++ library
@@ -219,14 +219,14 @@ include_directories(
 ## Add folders to be run by python nosetests
 # catkin_add_nosetests(test)
 add_executable(abot_driver
-  src/main.cpp
-  src/base_driver_config.cpp
-  src/base_driver.cpp
-  src/data_holder.cpp
-  src/simple_dataframe_master.cpp
-  src/serial_transport.cpp
+    src/main.cpp
+    src/base_driver_config.cpp
+    src/base_driver.cpp
+    src/data_holder.cpp
+    src/simple_dataframe_master.cpp
+    src/serial_transport.cpp
 )
 add_dependencies(abot_driver ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 target_link_libraries(abot_driver
-  ${catkin_LIBRARIES}
+    ${catkin_LIBRARIES}
 )
