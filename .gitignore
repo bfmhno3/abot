@@ -50,5 +50,5 @@ qtcreator-*
 # Claude Code 配置目录
 .claude
 
-# 万创鑫诚源代码
-robot_ws
+# catkin tools
+.catkin_tools/
