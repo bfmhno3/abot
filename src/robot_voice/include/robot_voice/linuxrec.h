@@ -20,7 +20,12 @@
 #ifndef __IFLY_WINREC_H__
 #define __IFLY_WINREC_H__
 
+#include <pthread.h>
+#include <stddef.h>
+#include <stdlib.h>
+
 #include "formats.h"
+
 /* error code */
 enum {
   RECORD_ERR_BASE = 0,
