@@ -1,6 +1,6 @@
 <package>
     <name>abot_model</name>
-    <version>0.0.0</version>
+    <version>1.0.0</version>
     <description>
         <p>URDF Description package for abot_model</p>
         <p>This package contains configuration data, 3D models and launch files

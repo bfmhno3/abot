@@ -2,8 +2,8 @@
 Changelog for package robot_voice
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+1.0.0 (2026-04-20)
+------------------
 * build(robot_voice): 分别配置 C 和 C++ 的编译标准以消除清高
   - 移除了 CMakeLists.txt 中导致警告的全局 -std=c++11 编译选项
   - 使用 CMAKE_CXX_STANDARD 为 C++ 代码独立设置 C++11 标准
