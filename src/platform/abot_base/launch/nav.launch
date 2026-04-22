@@ -1,0 +1,7 @@
+<launch>
+  <param name="use_sim_time" value="flase" />
+  <arg name="map_name" default="map.yaml" />
+  <node name="map_server" pkg="map_server" type="map_server" args="$(find abot_base)/maps/$(arg map_name)"/>
+  <include file="$(find abot_base)/launch/move_base.launch" />
+  <include file="$(find abot_base)/launch/amcl.launch" /> 
+</launch>
