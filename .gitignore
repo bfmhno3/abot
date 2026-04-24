@@ -55,3 +55,13 @@ qtcreator-*
 
 # CLion 配置文件
 .idea/
+
+# Demo package runtime artifacts and local config
+src/perception/ocr_detect/temp/
+src/perception/ocr_detect/image/
+src/perception/ocr_detect/result/
+src/perception/abot_vlm/temp/
+src/perception/abot_vlm/temp2/
+src/perception/abot_vlm/scripts/__pycache__/
+src/perception/abot_vlm/scripts/API_KEY.py
+src/speech/TTS_audio/scripts/output.mp3
