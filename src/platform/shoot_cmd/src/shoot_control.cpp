@@ -54,11 +54,13 @@ void shoot_cb(const std_msgs::String::ConstPtr& msg) {
 int main(int argc, char** argv) {
   ros::init(argc, argv, "shoot_control");
   ros::NodeHandle n;
+  ros::NodeHandle pn("~");
   ros::Subscriber shoot_sub = n.subscribe("/shoot", 1000, shoot_cb);
-  ;
-  char portname[20];
-  sprintf(portname, "/dev/shoot");
-  sc.init(portname, 9600);
+  std::string portname;
+  int baudrate;
+  pn.param<std::string>("port", portname, "/dev/shoot");
+  pn.param("baud_rate", baudrate, 9600);
+  sc.init(portname.c_str(), baudrate);
   ros::Rate loop_rate(200);
   while (ros::ok()) {
     ros::spinOnce();

@@ -7,7 +7,7 @@
 	<arg name="object_prefix" default="object"/>
 	<arg name="objects_path"  default=""/>
 	<arg name="gui"           default="true"/>
-	<arg name="settings_path" default="~/.ros/find_object_2d.ini"/>
+	<arg name="settings_path" default="$(env HOME)/.ros/find_object_2d.ini"/>
 	
 	<node name="find_object_3d" pkg="find_object_2d" type="find_object_2d" output="screen">
 		<param name="gui" value="$(arg gui)" type="bool"/>
