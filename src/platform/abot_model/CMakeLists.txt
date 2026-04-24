@@ -1,5 +1,4 @@
-cmake_minimum_required(VERSION 2.8.3)
-
+cmake_minimum_required(VERSION 3.10.2)
 project(abot_model)
 
 find_package(catkin REQUIRED)
