@@ -22,7 +22,7 @@ catkin_package(
 )
 
 add_executable(mission_node src/mission_node.cpp)
-target_compile_features(abot_driver PRIVATE cxx_std_11)
+target_compile_features(mission_node PRIVATE cxx_std_11)
 target_include_directories(mission_node PRIVATE
     include
     ${catkin_INCLUDE_DIRS}
