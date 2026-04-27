@@ -65,3 +65,4 @@ src/perception/abot_vlm/temp2/
 src/perception/abot_vlm/scripts/__pycache__/
 src/perception/abot_vlm/scripts/API_KEY.py
 src/speech/TTS_audio/scripts/output.mp3
+.grepai/
