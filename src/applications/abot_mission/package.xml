@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<package format="2">
+    <name>abot_mission</name>
+    <version>1.0.0</version>
+    <description>Competition mission launch orchestration — autonomous navigation (auto_nav) and target shooting (target_shoot)</description>
+
+    <maintainer email="abot@todo.todo">abot</maintainer>
+    <license>TODO</license>
+
+    <buildtool_depend>catkin</buildtool_depend>
+
+    <exec_depend>abot_bringup</exec_depend>
+    <exec_depend>abot_vlm</exec_depend>
+    <exec_depend>robot_slam</exec_depend>
+    <exec_depend>track_tag</exec_depend>
+    <exec_depend>TTS_audio</exec_depend>
+    <exec_depend>roscpp</exec_depend>
+    <exec_depend>rospy</exec_depend>
+    <exec_depend>std_msgs</exec_depend>
+
+    <export>
+    </export>
+</package>

@@ -1,0 +1,63 @@
+<launch>
+  <!-- ================================================================
+    自主巡航 (Autonomous Navigation) — 竞赛启动文件
+    ================================================================ -->
+
+  <!-- ============================================================
+    Layer 1: 硬件抽象
+    启动机器人底盘驱动、IMU、EKF 里程计、激光雷达
+    提供 /odom, /scan, /imu/data
+    ============================================================ -->
+  <group ns="hardware">
+    <include file="$(find abot_bringup)/launch/robot_with_imu.launch"/>
+  </group>
+
+  <!-- ============================================================
+    Layer 2: 导航基础设施
+    启动 map_server, amcl 定位, move_base 路径规划
+    依赖: /scan, /odom
+    ============================================================ -->
+  <group ns="navigation">
+    <include file="$(find robot_slam)/launch/navigation.launch">
+      <arg name="map_name" default="my_lab.yaml"/>
+    </include>
+  </group>
+
+  <!-- ============================================================
+    Layer 3: 感知
+    USB 摄像头 → AR 标签追踪 → VLM 视觉语言模型
+    依赖: 摄像头硬件
+    ============================================================ -->
+  <include file="$(find track_tag)/launch/usb_cam_with_calibration.launch"/>
+  <include file="$(find track_tag)/launch/ar_track_camera.launch"/>
+  <include file="$(find abot_vlm)/launch/vlm_node.launch"/>
+
+  <!-- ============================================================
+    Layer 4: 应用节点
+    多目标航点导航, RViz 可视化, 语音合成
+    依赖: move_base action server 就绪
+    ============================================================ -->
+  <include file="$(find robot_slam)/launch/multi_goal.launch"/>
+  <include file="$(find robot_slam)/launch/view_nav.launch"/>
+
+  <node name="tts_node" pkg="TTS_audio" type="TTS.py" output="screen"/>
+
+  <!-- ============================================================
+    Layer 5: 竞赛逻辑 — 语音唤醒 / 开始信号
+    依赖: 所有下层模块就绪
+
+    TODO: GameStart.launch 及其依赖文件目前仅存在于
+    others/demo/src/robot_slam/ 中，尚未迁移到 src/。
+    迁移完成后取消下方注释即可启用。
+
+    缺失文件清单:
+      scripts/start.py
+      scripts/decoder.py
+      scripts/detect.py
+      resources/common.res
+      resources/models/startGame.pmdl
+      resources/startGame.wav
+    ============================================================ -->
+  <!-- <include file="$(find robot_slam)/launch/GameStart.launch"/> -->
+
+</launch>
